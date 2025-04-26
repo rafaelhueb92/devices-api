@@ -10,6 +10,7 @@ export type DeviceDocument = HydratedDocument<Device>;
   versionKey: false,
 })
 export class Device {
+  [x: string]: any;
   @Prop({
     type: String,
     index: true,
