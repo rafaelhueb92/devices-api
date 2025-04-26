@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: nestjs_api
+    container_name: device_api
     restart: always
     ports:
       - '3000:3000'
