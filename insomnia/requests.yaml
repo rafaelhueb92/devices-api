@@ -1,0 +1,221 @@
+type: collection.insomnia.rest/5.0
+name: Devices
+meta:
+  id: wrk_0ae21f838f12487fba3bd3d0cc14aaa5
+  created: 1745633294726
+  modified: 1745633294726
+collection:
+  - url: "{{ _.base_url }}/devices"
+    name: All
+    meta:
+      id: req_9963999d129e4957ab24ffdc8a991910
+      created: 1745633359180
+      modified: 1745633512554
+      isPrivate: false
+      sortKey: -1745633359180
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.0.2
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: false
+      username: ADMIN
+      password: ADMIN
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.base_url }}/devices"
+    name: New
+    meta:
+      id: req_2c71bc87471141f0af4f8bb915754aaf
+      created: 1745633516217
+      modified: 1745634818470
+      isPrivate: false
+      sortKey: -1745633516217
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name":"{% faker 'randomWord' %}",
+        	"brand":"TP-LINK"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/11.0.2
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: false
+      username: ADMIN
+      password: ADMIN
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.base_url }}/devices?brand=TP-LINK"
+    name: Fetch by brand
+    meta:
+      id: req_3d5013d066cc4becb9a8ebbf9cb7f0f8
+      created: 1745633729991
+      modified: 1745634833785
+      isPrivate: false
+      sortKey: -1745501886857
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.0.2
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: false
+      username: ADMIN
+      password: ADMIN
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.base_url }}/devices/d2de5f6d-dde9-4630-8949-50855610ecd3"
+    name: Update
+    meta:
+      id: req_e1b05b9f2c5f45a0a9fbfa3d6ec9d2af
+      created: 1745633739034
+      modified: 1745634466623
+      isPrivate: false
+      sortKey: -1745633437698.5
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"state":"inactive"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/11.0.2
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: false
+      username: ADMIN
+      password: ADMIN
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.base_url }}/devices/d2de5f6d-dde9-4630-8949-50855610ecd3"
+    name: Delete
+    meta:
+      id: req_6d6a877041d640828a95b0765e0d1501
+      created: 1745633750259
+      modified: 1745634224282
+      isPrivate: false
+      sortKey: -1745633476957.75
+    method: DELETE
+    headers:
+      - name: User-Agent
+        value: insomnia/11.0.2
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: false
+      username: ADMIN
+      password: ADMIN
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.base_url }}/devices?state=in-use"
+    name: Fetch by state
+    meta:
+      id: req_829e11952d2f42aea12baa9d15b58344
+      created: 1745633955720
+      modified: 1745634144664
+      isPrivate: false
+      sortKey: -1745436150695.5
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.0.2
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: false
+      username: ADMIN
+      password: ADMIN
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: "{{ _.base_url }}/devices"
+    name: by ID
+    meta:
+      id: req_de0430dfc16842548a431db8e92d7681
+      created: 1745633984093
+      modified: 1745633984093
+      isPrivate: false
+      sortKey: -1745403282614.75
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/11.0.2
+    authentication:
+      type: basic
+      useISO88591: false
+      disabled: false
+      username: ADMIN
+      password: ADMIN
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_1ba839c35cfcc4f0b507a1a1d920324aa7ff6166
+    created: 1745633294752
+    modified: 1745633294752
+environments:
+  name: Base Environment
+  meta:
+    id: env_1ba839c35cfcc4f0b507a1a1d920324aa7ff6166
+    created: 1745633294734
+    modified: 1745633388098
+    isPrivate: false
+  data:
+    base_url: http://localhost:3000
