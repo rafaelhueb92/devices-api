@@ -10,7 +10,6 @@ Comming Soon
 
 ## 🏃 How to run
 
-````bash
+```bash
  docker compose up --build --force-recreate
- ```
-````
+```
