@@ -7,3 +7,10 @@
 ## 📦 Overview
 
 Comming Soon
+
+## 🏃 How to run
+
+````bash
+ docker compose up --build --force-recreate
+ ```
+````
