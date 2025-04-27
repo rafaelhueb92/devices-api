@@ -27,11 +27,8 @@ COPY --from=builder --chown=nestjs:nodejs /usr/src/app/dist ./dist
 COPY --from=dependencies --chown=nestjs:nodejs /usr/src/app/node_modules ./node_modules
 COPY package*.json ./
 
-ENV NODE_ENV=production \
-    PORT=3000
-
-#HEALTHCHECK --interval=30s --timeout=3s --start-period=30s \
-#    CMD curl -f http://localhost:${PORT}/health/check || exit 1
+ENV NODE_ENV=${NODE_ENV} \
+    PORT=${PORT}
 
 USER nestjs
 

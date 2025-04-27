@@ -8,15 +8,14 @@ import {
   Delete,
   Body,
   Param,
-  Query,
   UseGuards,
   HttpStatus,
   HttpCode,
 } from '@nestjs/common';
-import { DeviceService } from './device.service';
+import { DeviceRepository } from './repositories/device.repository';
 import { CreateDeviceDto } from './dto/create.dto';
 import { UpdateDeviceDto } from './dto/update.dto';
-import { Device } from './device.schema';
+import { Device } from './schemas/device.schema';
 import { DeviceState } from './enums/state.enum';
 import { BasicAuthGuard } from '../common/guards/basic-auth/basic-auth.guard';
 import { ThrottlerGuard } from '@nestjs/throttler';
@@ -25,16 +24,16 @@ import {
   ApiOperation,
   ApiResponse,
   ApiBasicAuth,
-  ApiQuery,
   ApiParam,
 } from '@nestjs/swagger';
+import { MongoIdPipe } from '../common/pipes/mongo/mongo-id.pipe';
 
 @ApiTags('devices')
 @Controller('devices')
 @UseGuards(BasicAuthGuard, ThrottlerGuard)
 @ApiBasicAuth()
 export class DeviceController {
-  constructor(private readonly deviceService: DeviceService) {}
+  constructor(private readonly deviceRepository: DeviceRepository) {}
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
@@ -49,23 +48,18 @@ export class DeviceController {
     description: 'Invalid input data.',
   })
   async create(@Body() createDeviceDto: CreateDeviceDto) {
-    return this.deviceService.create(createDeviceDto);
+    return this.deviceRepository.create(createDeviceDto);
   }
 
   @Get()
-  @ApiOperation({ summary: 'Get all devices with optional filters' })
-  @ApiQuery({ name: 'brand', required: false, type: String })
-  @ApiQuery({ name: 'state', required: false, enum: DeviceState })
+  @ApiOperation({ summary: 'Get all devices' })
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'Return all devices matching the criteria.',
+    description: 'Return all devices.',
     type: [Device],
   })
-  async findAll(
-    @Query('brand') brand?: string,
-    @Query('state') state?: DeviceState,
-  ) {
-    return this.deviceService.findAll(brand, state);
+  async findAll() {
+    return this.deviceRepository.findAll();
   }
 
   @Get(':id')
@@ -80,8 +74,8 @@ export class DeviceController {
     status: HttpStatus.NOT_FOUND,
     description: 'Device not found.',
   })
-  async findOne(@Param('id') id: string) {
-    return this.deviceService.findOne(id);
+  async findOne(@Param('id', MongoIdPipe) id: string) {
+    return this.deviceRepository.findOne({ _id: id });
   }
 
   @Put(':id')
@@ -97,10 +91,10 @@ export class DeviceController {
     description: 'Invalid input data or device in use.',
   })
   async update(
-    @Param('id') id: string,
+    @Param('id', MongoIdPipe) id: string,
     @Body() updateDeviceDto: UpdateDeviceDto,
   ) {
-    return this.deviceService.update(id, updateDeviceDto);
+    return this.deviceRepository.update(id, updateDeviceDto);
   }
 
   @Patch(':id')
@@ -112,10 +106,10 @@ export class DeviceController {
     type: Device,
   })
   async patch(
-    @Param('id') id: string,
+    @Param('id', MongoIdPipe) id: string,
     @Body() updateDeviceDto: UpdateDeviceDto,
   ) {
-    return this.deviceService.update(id, updateDeviceDto);
+    return this.deviceRepository.update(id, updateDeviceDto);
   }
 
   @Delete(':id')
@@ -130,8 +124,8 @@ export class DeviceController {
     status: HttpStatus.BAD_REQUEST,
     description: 'Device is in use and cannot be deleted.',
   })
-  async remove(@Param('id') id: string): Promise<void> {
-    return this.deviceService.remove(id);
+  async delete(@Param('id', MongoIdPipe) id: string): Promise<void> {
+    return await this.deviceRepository.delete(id);
   }
 
   @Get('brand/:brand')
@@ -143,7 +137,7 @@ export class DeviceController {
     type: [Device],
   })
   async findByBrand(@Param('brand') brand: string): Promise<Device[]> {
-    return this.deviceService.findByBrand(brand);
+    return await this.deviceRepository.findAll({ filter: { brand } });
   }
 
   @Get('state/:state')
@@ -155,6 +149,6 @@ export class DeviceController {
     type: [Device],
   })
   async findByState(@Param('state') state: DeviceState): Promise<Device[]> {
-    return this.deviceService.findByState(state);
+    return await this.deviceRepository.findAll({ filter: { state } });
   }
 }

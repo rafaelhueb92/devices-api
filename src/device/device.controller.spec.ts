@@ -1,9 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { DeviceController } from './device.controller';
-import { DeviceService } from './device.service';
 import { CreateDeviceDto } from './dto/create.dto';
 import { UpdateDeviceDto } from './dto/update.dto';
-import { Device } from './device.schema';
+import { Device } from './schemas/device.schema';
 import { DeviceState } from './enums/state.enum';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 

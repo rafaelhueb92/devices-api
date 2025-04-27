@@ -6,7 +6,10 @@ import { RetryModule } from './common/retry/retry.module';
 import { LoggerModule } from './common/logger/logger.module';
 import { ContextModule } from './common/context-module/context-module.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { HealthModule } from './health/health.module';
+import { RequestInterceptor } from './common/interceptors/request/request.interceptor';
+import { ContextInterceptor } from './common/context-module/context-module.interceptor';
 
 @Module({
   imports: [
@@ -16,7 +19,7 @@ import { APP_GUARD } from '@nestjs/core';
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
+      useFactory: (configService: ConfigService) => ({
         uri: configService.get<string>('MONGO_DB_URL'),
       }),
       inject: [ConfigService],
@@ -25,11 +28,20 @@ import { APP_GUARD } from '@nestjs/core';
     RetryModule,
     LoggerModule,
     ContextModule,
+    HealthModule,
   ],
   providers: [
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: RequestInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ContextInterceptor,
     },
   ],
 })

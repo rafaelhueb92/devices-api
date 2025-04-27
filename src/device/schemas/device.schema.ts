@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
-import { DeviceState } from './enums/state.enum';
+import { DeviceState } from '../enums/state.enum';
+import { BaseSchema } from '../../common/base/base.schema';
 
 export type DeviceDocument = HydratedDocument<Device>;
 
@@ -9,15 +10,7 @@ export type DeviceDocument = HydratedDocument<Device>;
   collection: 'devices',
   versionKey: false,
 })
-export class Device {
-  [x: string]: any;
-  @Prop({
-    type: String,
-    index: true,
-    unique: true,
-  })
-  id: string;
-
+export class Device extends BaseSchema {
   @Prop({
     type: String,
     required: true,
@@ -43,22 +36,8 @@ export class Device {
     index: true,
   })
   state: DeviceState;
-
-  @Prop({
-    type: Date,
-    default: Date.now,
-    immutable: true,
-  })
-  creationTime: Date;
 }
 
 export const DeviceSchema = SchemaFactory.createForClass(Device);
 
 DeviceSchema.index({ brand: 1, state: 1 });
-
-DeviceSchema.methods.canUpdate = function (newData: Partial<Device>): boolean {
-  return !(
-    this.state === DeviceState.IN_USE &&
-    (newData.name !== undefined || newData.brand !== undefined)
-  );
-};
