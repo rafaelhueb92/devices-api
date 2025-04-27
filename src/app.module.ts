@@ -4,12 +4,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { DevicesModule } from './device/device.module';
 import { RetryModule } from './common/retry/retry.module';
 import { LoggerModule } from './common/logger/logger.module';
-import { ContextModule } from './common/context-module/context-module.module';
+import { ContextModule } from './common/context-module/context.module';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { HealthModule } from './health/health.module';
 import { RequestInterceptor } from './common/interceptors/request/request.interceptor';
-import { ContextInterceptor } from './common/context-module/context-module.interceptor';
+import { ContextInterceptor } from './common/context-module/context.interceptor';
 
 @Module({
   imports: [

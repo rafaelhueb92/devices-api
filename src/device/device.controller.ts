@@ -1,4 +1,3 @@
-// device.controller.ts
 import {
   Controller,
   Get,

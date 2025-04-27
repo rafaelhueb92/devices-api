@@ -1,3 +1,7 @@
+jest.mock('@nestjs/throttler', () => ({
+  ThrottlerGuard: class {},
+}));
+
 import { Test, TestingModule } from '@nestjs/testing';
 import { HealthController } from './health.controller';
 
@@ -12,7 +16,10 @@ describe('HealthController', () => {
     controller = module.get<HealthController>(HealthController);
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
+  describe('check', () => {
+    it('should return undefined (void) when api is running', () => {
+      const result = controller.check();
+      expect(result).toBeUndefined();
+    });
   });
 });

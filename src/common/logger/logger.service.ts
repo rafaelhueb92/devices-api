@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import pino from 'pino';
-import { ContextService } from '../context-module/context-module.service';
+import { ContextService } from '../context-module/context.service';
 
 @Injectable()
 export class LoggerService {

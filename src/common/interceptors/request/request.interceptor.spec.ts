@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ExecutionContext, CallHandler } from '@nestjs/common';
 import { of, throwError } from 'rxjs';
 import { RequestInterceptor } from './request.interceptor';
-import { RequestWithId } from '../../interfaces/request-with-id.interface';
+import { RequestWithId } from '../../interfaces/request-with-id.interceptor';
 import * as uuid from 'uuid';
 
 jest.mock('uuid', () => ({
@@ -20,14 +20,11 @@ describe('RequestInterceptor', () => {
 
     interceptor = module.get<RequestInterceptor>(RequestInterceptor);
 
-    // Mock console.log
     jest.spyOn(console, 'log').mockImplementation(() => {});
 
-    // Mock Date.now
     mockDate = 1000000;
     jest.spyOn(Date, 'now').mockImplementation(() => mockDate);
 
-    // Mock UUID
     (uuid.v4 as jest.Mock).mockReturnValue('test-uuid');
   });
 
@@ -82,11 +79,10 @@ describe('RequestInterceptor', () => {
     const mockContext = createMockExecutionContext('GET', '/test');
     const mockCallHandler = createMockCallHandler({ data: 'test' });
 
-    // Simulate time passing
     let callCount = 0;
     (Date.now as jest.Mock).mockImplementation(() => {
       callCount++;
-      return mockDate + (callCount > 1 ? 100 : 0); // Add 100ms on second call
+      return mockDate + (callCount > 1 ? 100 : 0);
     });
 
     interceptor.intercept(mockContext, mockCallHandler).subscribe({

@@ -41,7 +41,6 @@ export class DeviceRepository extends BaseRepository<DeviceDocument> {
     }
 
     if (device.state === DeviceState.IN_USE) {
-      console.log('in-use', updateDTO, device.state);
       if (
         !updateDTO ||
         (updateDTO && this.isNameOrBrandChanged(device, updateDTO))

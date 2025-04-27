@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 import { DeviceState } from '../enums/state.enum';
-import { BaseSchema } from '../../common/base/base.schema';
 
 export type DeviceDocument = HydratedDocument<Device>;
 
@@ -9,8 +8,9 @@ export type DeviceDocument = HydratedDocument<Device>;
   timestamps: true,
   collection: 'devices',
   versionKey: false,
+  virtuals: true,
 })
-export class Device extends BaseSchema {
+export class Device {
   @Prop({
     type: String,
     required: true,

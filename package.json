@@ -17,7 +17,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "NODE_ENV=test jest --config ./test/jest-e2e.json",
+    "test:e2e:docker": "NODE_ENV=test docker compose -f docker-compose.e2e.yaml up -d && npm run test:e2e && docker-compose -f docker-compose.e2e.yml down"
   },
   "dependencies": {
     "@nestjs/cache-manager": "^3.0.1",
@@ -29,6 +30,7 @@
     "@nestjs/swagger": "^11.1.5",
     "@nestjs/throttler": "^6.4.0",
     "cache-manager-redis-store": "^3.0.1",
+    "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "mo": "^1.7.3",
     "mongoose": "^8.13.2",

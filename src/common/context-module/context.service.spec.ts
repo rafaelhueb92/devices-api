@@ -1,12 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ContextService } from './context-module.service';
-import { RequestWithId } from '../interfaces/request-with-id.interface';
+import { ContextService } from './context.service';
+import { RequestWithId } from '../interfaces/request-with-id.interceptor';
 
 describe('ContextService', () => {
   let service: ContextService;
   let currentStore: Map<string, any> | null = null;
 
-  // Mock AsyncLocalStorage with proper context handling
   const mockAsyncLocalStorage = {
     run: jest.fn((store, callback) => {
       const previousStore = currentStore;
@@ -32,7 +31,6 @@ describe('ContextService', () => {
     }).compile();
 
     service = module.get<ContextService>(ContextService);
-    // Reset the store before each test
     currentStore = null;
   });
 

@@ -1,5 +1,3 @@
-// src/common/repositories/base.repository.ts
-
 import { Cache } from 'cache-manager';
 import {
   Model,
@@ -11,7 +9,6 @@ import {
 import { Injectable, Logger } from '@nestjs/common';
 import { RetryService } from '../retry/retry.service';
 import { QueryOptions } from './interfaces/query-options.interafce';
-import { LoggerService } from '../logger/logger.service';
 
 @Injectable()
 export abstract class BaseRepository<T extends Document> {
@@ -22,7 +19,6 @@ export abstract class BaseRepository<T extends Document> {
     protected readonly model: Model<T>,
     protected readonly cacheManager: Cache,
     protected readonly retryService: RetryService,
-    protected readonly logger: LoggerService,
   ) {}
 
   protected getCacheKey(id: string): string {

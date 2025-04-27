@@ -10,7 +10,7 @@ import { ConfigModule } from '@nestjs/config';
 import { RetryService } from '../common/retry/retry.service';
 import { LoggerService } from '../common/logger/logger.service';
 import { DeviceRepository } from './repositories/device.repository';
-import { ContextModule } from '../common/context-module/context-module.module';
+import { ContextModule } from '../common/context-module/context.module';
 
 @Module({
   imports: [

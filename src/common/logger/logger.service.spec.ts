@@ -2,7 +2,6 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { LoggerService } from './logger.service';
 import { ContextService } from '../context-module/context.service';
 
-// Mock pino module
 jest.mock('pino', () => {
   const mockPino = {
     info: jest.fn(),

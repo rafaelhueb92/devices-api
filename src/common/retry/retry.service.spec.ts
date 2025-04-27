@@ -209,13 +209,10 @@ describe('RetryService', () => {
 
       const executePromise = service.execute(fn, 'test');
 
-      // First attempt fails immediately
       await jest.runOnlyPendingTimers();
 
-      // Should wait for the delay before second attempt
       expect(fn).toHaveBeenCalledTimes(1);
 
-      // Advance timers to trigger second attempt
       await jest.runAllTimers();
       await executePromise;
 

@@ -10,7 +10,4 @@ export class CreateDeviceDto {
   @IsString()
   @IsNotEmpty()
   brand: string;
-
-  @IsEnum(DeviceState)
-  state: DeviceState;
 }

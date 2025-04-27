@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { v4 as uuidv4 } from 'uuid';
-import { RequestWithId } from '../../interfaces/request-with-id.interface';
+import { RequestWithId } from '../../interfaces/request-with-id.interceptor';
 
 @Injectable()
 export class RequestInterceptor implements NestInterceptor {

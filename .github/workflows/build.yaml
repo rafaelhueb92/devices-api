@@ -9,7 +9,27 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
+    services:
+      mongo:
+        image: mongo:latest
+        ports: [27018:27017]
+        env:
+          MONGO_INITDB_ROOT_USERNAME: test
+          MONGO_INITDB_ROOT_PASSWORD: test
+      redis:
+        image: redis:latest
+        ports: [6380:6379]
+    env:
+      MONGO_DB_URL: mongodb://test:test@localhost:27018
+      MONGO_DB_NAME: test_db
+      APP_USER: ${{ secrets.APP_USER }}
+      APP_PASSWORD: ${{ secrets.APP_PASSWORD }}
+      REDIS_HOST: localhost
+      REDIS_PORT: 6380
+      REDIS_PASSWORD:
+      REDIS_TTL: 3600
+      PORT: 3001
+      NODE_ENV: test
     steps:
       - uses: actions/checkout@v4
       - name: Set up Node.js
@@ -22,3 +42,19 @@ jobs:
         run: npm ci
       - name: Run tests
         run: npm test
+      - name: Create .env.test file
+        run: |
+          cat <<EOF > .env.test
+          MONGO_DB_URL=${MONGO_DB_URL}
+          MONGO_DB_NAME=${MONGO_DB_NAME}
+          APP_USER=${APP_USER}
+          APP_PASSWORD=${APP_PASSWORD}
+          REDIS_HOST=${REDIS_HOST}
+          REDIS_PORT=${REDIS_PORT}
+          REDIS_PASSWORD=${REDIS_PASSWORD}
+          REDIS_TTL=${REDIS_TTL}
+          PORT=${PORT}
+          NODE_ENV=${NODE_ENV}
+          EOF
+      - name: Run E2E tests
+        run: npm run test:e2e

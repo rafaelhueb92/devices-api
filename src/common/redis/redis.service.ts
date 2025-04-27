@@ -4,7 +4,7 @@ import { Cache } from 'cache-manager';
 
 @Injectable()
 export class RedisService {
-  private readonly logger = new Logger(RedisService.name); // Using global logger
+  private readonly logger = new Logger(RedisService.name);
 
   constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache) {
     this.logger.log('RedisService initialized');
