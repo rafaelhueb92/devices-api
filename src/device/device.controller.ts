@@ -65,6 +65,7 @@ export class DeviceController {
     return this.deviceRepository.findAll({
       skip: page * pageSize,
       limit: pageSize,
+      sort: { createdAt: -1 },
     });
   }
 
