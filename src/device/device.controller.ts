@@ -10,6 +10,7 @@ import {
   UseGuards,
   HttpStatus,
   HttpCode,
+  Query,
 } from '@nestjs/common';
 import { DeviceRepository } from './repositories/device.repository';
 import { CreateDeviceDto } from './dto/create.dto';
@@ -57,8 +58,14 @@ export class DeviceController {
     description: 'Return all devices.',
     type: [Device],
   })
-  async findAll() {
-    return this.deviceRepository.findAll();
+  async findAll(
+    @Query('page') page: number = 1,
+    @Query('pageSize') pageSize: number = 10,
+  ) {
+    return this.deviceRepository.findAll({
+      skip: page * pageSize,
+      limit: pageSize,
+    });
   }
 
   @Get(':id')
